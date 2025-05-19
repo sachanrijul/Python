@@ -1,31 +1,3 @@
-# -----------------------------------------
-# Chai Aur Python - Series Introduction
-# -----------------------------------------
-
-# This series is designed for absolute beginners to learn Python in a fun, easy, and interactive way.
-# Key highlights of the series:
-# - Starts from scratch with no prior coding knowledge required.
-# - Simple explanations with real-life analogies.
-# - Examples and theory go hand-in-hand.
-# - Regular chai (tea) breaks are metaphorical for easy pacing.
-
-# What you'll learn:
-# 1. Python basics (variables, data types, loops, etc.)
-# 2. Intermediate concepts (functions, error handling, file handling, etc.)
-# 3. Advanced topics (OOP, modules, libraries, etc.)
-# 4. Hands-on projects and real-world use cases.
-
-# Who this is for:
-# - Beginners with no programming background
-# - College students or school students
-# - Anyone switching to Python from another language
-
-# No code examples in this video.
-
-# ------------------------------------------------------
-# Chai Aur Python - Video 3: Python Inner Working
-# ------------------------------------------------------
-
 # 🧠 How does Python actually work behind the scenes?
 
 # 1. Python is an interpreted language.
@@ -96,10 +68,7 @@ print(greet.lang)
 # Final Note:
 # - Python is beginner-friendly due to its simple syntax and internal architecture.
 # - Understanding inner workings helps in writing optimized and bug-free code.
-
-# ------------------------------------------------------
-# Chai Aur Python - Video 4: Python in Shell
-# ------------------------------------------------------
+#-----------------------------------------------------------------------------
 
 # 🐚 What is the Python Shell?
 
@@ -145,10 +114,7 @@ round(3.14159, 2)
 # Summary:
 # - Python shell is great for quick experimentation.
 # - It's an excellent tool for beginners to get comfortable with the language.
-
-# ---------------------------------------------------------------
-# Chai Aur Python - Video 5: Mutable and Immutable in Python
-# ---------------------------------------------------------------
+#-----------------------------------------------------------------------------
 
 # 🔁 What is "mutable" and "immutable" in Python?
 
@@ -221,10 +187,7 @@ print("Outside function:", my_list)  # changed
 # Summary:
 # - Use mutable types when you want to modify objects in place.
 # - Use immutable types for safety and simplicity (e.g., keys in dicts).
-
-# --------------------------------------------------------
-# Chai Aur Python - Video 6: Python Data Types (Big Picture)
-# --------------------------------------------------------
+#-----------------------------------------------------------------------
 
 # 📦 What is a Data Type?
 # - Data types define what kind of value a variable can hold.
