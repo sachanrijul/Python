@@ -37,20 +37,78 @@ print(f"Sliced string: {slice_tea}")  # Output: Masala
 # ✅ More slicing examples using numbers
 num_list = "0123456789"
 
-# Slice full string
-print(num_list[:])  # Output: 0123456789
+# String for reference
+text = "Python"
 
-# Slice from index 3 to end
-print(num_list[3:])  # Output: 3456789
+# 1. Positive Indexing – Accessing characters from left (0-based)
+print(text[0])  # Output: 'P'
+print(text[1])  # Output: 'y'
+print(text[5])  # Output: 'n'
 
-# Slice from start to index 7 (exclusive)
-print(num_list[:7])  # Output: 0123456
+# 2. Negative Indexing – Accessing characters from right (-1-based)
+print(text[-1])  # Output: 'n'
+print(text[-2])  # Output: 'o'
+print(text[-6])  # Output: 'P'
 
-# Slice from index 0 to 7 with a step of 2
-print(num_list[0:7:2])  # Output: 0246
+# 3. IndexError – Accessing index out of range
+# print(text[6])  # Error: IndexError: string index out of range
 
-# Slice from index 0 to 7 with a step of 3
-print(num_list[0:7:3])  # Output: 036
+# 4. Slicing – Accessing a range of characters [start:stop]
+print(text[0:2])  # Output: 'Py' (0 inclusive, 2 exclusive)
+print(text[1:4])  # Output: 'yth'
+
+# 5. Slicing with omitted start or end
+print(text[:3])   # Output: 'Pyt' (start is 0)
+print(text[2:])   # Output: 'thon' (till end)
+
+# 6. Full slice – Copy the whole string
+print(text[:])  # Output: 'Python'
+
+# 7. Slicing with step [start:stop:step]
+print(text[::2])   # Output: 'Pto' (every second char)
+print(text[1::2])  # Output: 'yhn'
+
+# 8. Negative step – Reverse the string
+print(text[::-1])  # Output: 'nohtyP'
+
+# 9. Advanced slicing – Using all three parts
+print(text[1:5:2])  # Output: 'yh' (1 to 4 with step 2)
+
+# 10. Combining positive and negative indexes in slices
+print(text[1:-1])  # Output: 'ytho'
+
+# 11. Length of string using len() (helps avoid IndexError)
+print(len(text))  # Output: 6
+
+# 12. Using a loop with indexing
+for i in range(len(text)):
+    print(f"Index {i} has character {text[i]}")
+# Output:
+# Index 0 has character P
+# Index 1 has character y
+# Index 2 has character t
+# Index 3 has character h
+# Index 4 has character o
+# Index 5 has character n
+
+# 13. Using enumerate() to get both index and character
+for idx, char in enumerate(text):
+    print(f"{idx} -> {char}")
+# Output:
+# 0 -> P
+# 1 -> y
+# 2 -> t
+# 3 -> h
+# 4 -> o
+# 5 -> n
+
+# 14. Using slice() object for indexing
+s = slice(1, 5, 2)
+print(text[s])  # Output: 'yh'
+
+# 15. Indexing inside list comprehension
+chars = [text[i] for i in range(len(text)) if i % 2 == 0]
+print(chars)  # Output: ['P', 't', 'o']
 
 # ✅ Negative indexing example
 # Last character: num_list[-1]

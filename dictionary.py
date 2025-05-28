@@ -139,3 +139,77 @@ print(d4)
 # - Duplicate keys are overwritten
 conflict = {"a": 10, "a": 99}
 print(conflict)  # {'a': 99}
+
+# ----------- All Dictionary Methods in Python -----------
+
+# Sample dictionary
+person = {
+    "name": "Alice",
+    "age": 25,
+    "city": "New York"
+}
+
+# 1. get(key[, default]) – Returns value if key exists, else default
+print(person.get("name"))       # Output: Alice
+print(person.get("gender", "N/A"))  # Output: N/A
+
+# 2. keys() – Returns a view object of all keys
+print(person.keys())  # Output: dict_keys(['name', 'age', 'city'])
+
+# 3. values() – Returns a view object of all values
+print(person.values())  # Output: dict_values(['Alice', 25, 'New York'])
+
+# 4. items() – Returns a view object of key-value tuples
+print(person.items())  # Output: dict_items([('name', 'Alice'), ('age', 25), ('city', 'New York')])
+
+# 5. update([other]) – Adds or updates multiple key-value pairs
+person.update({"age": 26, "gender": "Female"})
+print(person)  # Output: {'name': 'Alice', 'age': 26, 'city': 'New York', 'gender': 'Female'}
+
+# 6. pop(key[, default]) – Removes and returns value for key; error if not found and no default
+print(person.pop("city"))  # Output: New York
+# print(person.pop("salary"))  # KeyError
+print(person.pop("salary", "Not Found"))  # Output: Not Found
+
+# 7. popitem() – Removes and returns last inserted key-value pair
+print(person.popitem())  # Output: ('gender', 'Female')
+
+# 8. setdefault(key[, default]) – Returns value if key exists, else inserts with default
+print(person.setdefault("name", "Unknown"))  # Output: Alice (already exists)
+print(person.setdefault("country", "USA"))   # Adds country: 'USA'
+print(person)  # Output includes new key: {'name': 'Alice', 'age': 26, 'country': 'USA'}
+
+# 9. clear() – Removes all items from dictionary
+temp = {"a": 1, "b": 2}
+temp.clear()
+print(temp)  # Output: {}
+
+# 10. copy() – Returns a shallow copy of the dictionary
+original = {"x": 10, "y": 20}
+copy_dict = original.copy()
+print(copy_dict)  # Output: {'x': 10, 'y': 20}
+print(copy_dict is original)  # Output: False (different object)
+
+# ----------- Bonus: Dictionary Comprehensions -----------
+
+# Dictionary comprehension example
+squares = {x: x * x for x in range(5)}
+print(squares)  # Output: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+
+# ----------- Iterating through a dictionary -----------
+
+info = {"a": 1, "b": 2}
+for key in info:
+    print(key, info[key])  # Output: a 1 \n b 2
+
+for key, value in info.items():
+    print(f"{key} -> {value}")  # Output: a -> 1 \n b -> 2
+
+# ----------- Built-in Functions with Dictionary -----------
+
+# len() – Number of key-value pairs
+print(len(info))  # Output: 2
+
+# str(), type()
+print(str(info))  # Output: string representation
+print(type(info))  # Output: <class 'dict'>
