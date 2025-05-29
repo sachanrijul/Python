@@ -30,6 +30,12 @@ print(greet("Alice"))  # Output: Hello, Alice!
 # - Executes the body
 # - Returns the result or None if no return statement
 
+# In functions we can use four types of arguments, which are mentioned below:
+# - Positional (like we use normal arguments) 
+# - Default (we declare some arguments in the funtion declaration)
+# - keywords (we use keyword as argument when calling function so you not have to worry about order of the arguments)
+# - Arbitary (*args and **kwargs : to take unlimited number of arguments)
+
 # --------------------------------------------
 
 # 3. Lambda (Anonymous) Functions

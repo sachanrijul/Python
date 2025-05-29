@@ -268,3 +268,174 @@ for val in iterable_list:
 it = iter([10, 20, 30])
 print(it.__next__())  # Output: 10
 print(next(it))       # Output: 20
+
+# ------------------- Membership Operators in Python (Full Notes) -------------------
+
+"""
+Membership operators are used to test whether a value is a member of a sequence or collection.
+
+There are only two:
+1. `in`     → Returns True if the element is found
+2. `not in` → Returns True if the element is NOT found
+
+These operators work with:
+- Strings
+- Lists
+- Tuples
+- Sets
+- Dictionaries
+- Ranges
+- Any iterable that implements __contains__() or __iter__() with comparison
+"""
+
+# ---------- Behind the Scenes ----------
+
+# The expression: `x in collection` actually calls:
+# - collection.__contains__(x)
+# If __contains__ is not defined, Python falls back to:
+# - iterating over the object using __iter__() and comparing items using ==
+
+# ---------- 1. Strings ----------
+
+text = "hello world"
+
+# Check if substring exists
+print("hello" in text)       # True → 'hello' is a substring
+print("world" in text)       # True
+print("hi" in text)          # False
+print("h" in text)           # True → 'h' is a character in the string
+print(" " in text)           # True → space exists
+
+# Case sensitivity
+print("Hello" in text)       # False → 'H' ≠ 'h'
+
+# Membership with `not in`
+print("z" not in text)       # True
+
+# Behind the scenes: text.__contains__('hello')
+
+# ---------- 2. Lists ----------
+
+fruits = ["apple", "banana", "cherry"]
+
+print("banana" in fruits)    # True
+print("grape" in fruits)     # False
+print("banana" not in fruits)  # False
+
+# Works with numbers too
+numbers = [1, 2, 3, 4, 5]
+print(3 in numbers)          # True
+print(10 not in numbers)     # True
+
+# Membership is checked using == comparison:
+print(3.0 in numbers)        # True → 3 == 3.0 is True
+print("3" in numbers)        # False → string "3" is not equal to integer 3
+
+# ---------- 3. Tuples ----------
+
+colors = ("red", "green", "blue")
+print("green" in colors)     # True
+print("yellow" in colors)    # False
+
+# Tuple is immutable, but membership check is allowed
+
+# ---------- 4. Sets ----------
+
+my_set = {10, 20, 30}
+print(20 in my_set)          # True
+print(25 not in my_set)      # True
+
+# Very fast! Set lookup is O(1) due to hashing
+# Uses __contains__() with hash lookup instead of linear search
+
+# Example of fast set lookup:
+large_list = list(range(1000000))
+large_set = set(large_list)
+
+import time
+
+start = time.time()
+print(999999 in large_list)   # Slower
+print("Time (list):", time.time() - start)
+
+start = time.time()
+print(999999 in large_set)    # Faster
+print("Time (set):", time.time() - start)
+
+# ---------- 5. Dictionaries ----------
+
+person = {
+    "name": "Alice",
+    "age": 25,
+    "city": "New York"
+}
+
+# Membership works only with keys
+print("name" in person)       # True
+print("Alice" in person)      # False (Alice is a value, not a key)
+print("Alice" in person.values())  # True
+
+# You can check keys, values, or key-value pairs:
+print("age" in person.keys())      # True
+print(25 in person.values())       # True
+print(("age", 25) in person.items())  # True
+
+# ---------- 6. Ranges ----------
+
+print(5 in range(10))         # True (range(0,10) includes 5)
+print(10 in range(10))        # False
+
+# Range is memory-efficient and checks using arithmetic, not iteration
+
+# ---------- 7. Nested Structures ----------
+
+matrix = [[1, 2], [3, 4], [5, 6]]
+
+print([1, 2] in matrix)       # True → entire list [1, 2] is an element
+print(2 in matrix)            # False → 2 is inside a sublist, not top-level
+
+# For deeper checks, you may use nested loops or flatten the structure
+
+# ---------- 8. Membership with Custom Objects ----------
+
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+people = [Person("Alice"), Person("Bob")]
+
+# Direct membership check won’t work without custom __eq__
+print(Person("Alice") in people)  # False → different memory, not equal
+
+# To make this work, we override __eq__
+class Person2:
+    def __init__(self, name):
+        self.name = name
+    def __eq__(self, other):
+        return self.name == other.name
+
+group = [Person2("Alice"), Person2("Bob")]
+print(Person2("Alice") in group)  # True → __eq__ returns True
+
+# ---------- Use in Control Structures ----------
+
+word = "python"
+if "t" in word:
+    print("The letter 't' is present.")  # Output
+
+if "z" not in word:
+    print("The letter 'z' is not present.")  # Output
+
+# ---------- Notes ----------
+
+"""
+✔ Works with all iterable types
+✔ Case-sensitive for strings
+✔ For dictionaries, checks keys by default
+✔ Set membership is the fastest due to hashing
+✔ Behind the scenes: __contains__ or iteration
+✔ Can be used in conditions, loops, filters, comprehensions, etc.
+✔ Custom object behavior depends on __eq__ method
+"""
+
+# ---------- End of Membership Operator Notes ----------

@@ -103,3 +103,11 @@ show_refcount(100)
 # - Understanding Python internals helps avoid confusion during debugging and interviews.
 # - Don't rely too heavily on visual count of references—many are abstracted away.
 # - Always check behavior for mutable vs immutable to avoid side-effects.
+
+# something extra ::--
+# You have seen the use of this.
+'''
+if __name__ = "__main__":
+    main()
+'''
+# It is used to stop unexpected exicution like when we import any module or any local file it exicutes automatically but if we use it, it will not exicute autmatically.

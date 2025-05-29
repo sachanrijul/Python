@@ -182,10 +182,151 @@ a = [1, 2]
 b = ['x', 'y']
 print(list(zip(a, b)))  # Output: [(1, 'x'), (2, 'y')]
 
-# List comprehensions – Short form to create lists
-squares = [x * x for x in range(5)]
-print(squares)  # Output: [0, 1, 4, 9, 16]
+# -- List Comprehension  
 
+"""
+List comprehension is a concise way to create lists in Python.
+
+Basic syntax:
+    [expression for item in iterable if condition]
+
+It is:
+- More compact and readable than loops
+- Often faster than traditional loops
+- Commonly used in data processing and filtering
+"""
+
+# ---------- 1. Basic Example ----------
+
+# Traditional way
+squares = []
+for i in range(5):
+    squares.append(i ** 2)
+
+# List comprehension way
+squares_comp = [i ** 2 for i in range(5)]
+print(squares_comp)  # Output: [0, 1, 4, 9, 16]
+
+# ---------- 2. With If Condition (Filtering) ----------
+
+# Get even numbers from 0 to 10
+evens = [x for x in range(11) if x % 2 == 0]
+print(evens)  # Output: [0, 2, 4, 6, 8, 10]
+
+# ---------- 3. With Else (Ternary Conditional Expression) ----------
+
+results = ["Even" if x % 2 == 0 else "Odd" for x in range(6)]
+print(results)  # Output: ['Even', 'Odd', 'Even', 'Odd', 'Even', 'Odd']
+
+# ---------- 4. Nested Loops in List Comprehension ----------
+
+# Traditional version
+pairs = []
+for x in [1, 2, 3]:
+    for y in [4, 5]:
+        pairs.append((x, y))
+
+# List comprehension version
+pairs_comp = [(x, y) for x in [1, 2, 3] for y in [4, 5]]
+print(pairs_comp)  # Output: [(1, 4), (1, 5), (2, 4), (2, 5), (3, 4), (3, 5)]
+
+# ---------- 5. Nested List Comprehensions ----------
+
+# Matrix transpose using nested comprehension
+matrix = [
+    [1, 2, 3],
+    [4, 5, 6]
+]
+
+transposed = [[row[i] for row in matrix] for i in range(3)]
+print(transposed)  # Output: [[1, 4], [2, 5], [3, 6]]
+
+# ---------- 6. Removing Specific Characters from String ----------
+
+text = "Hello, World!"
+filtered = [char for char in text if char.isalpha()]
+print(filtered)  # Output: ['H', 'e', 'l', 'l', 'o', 'W', 'o', 'r', 'l', 'd']
+
+# ---------- 7. Flattening a List of Lists ----------
+
+list_of_lists = [[1, 2], [3, 4], [5, 6]]
+flattened = [item for sublist in list_of_lists for item in sublist]
+print(flattened)  # Output: [1, 2, 3, 4, 5, 6]
+
+# ---------- 8. Using Functions in Comprehensions ----------
+
+def square(n):
+    return n * n
+
+squared = [square(x) for x in range(5)]
+print(squared)  # Output: [0, 1, 4, 9, 16]
+
+# ---------- 9. With zip() ----------
+
+names = ["Alice", "Bob", "Charlie"]
+ages = [24, 27, 22]
+
+combined = [f"{name} is {age} years old" for name, age in zip(names, ages)]
+print(combined)
+
+# ---------- 10. List Comprehension vs For Loop (Internal Working) ----------
+
+# Comprehension:
+# [expression for item in iterable if condition]
+# is internally equivalent to:
+result = []
+for item in iterable:
+    if condition:
+        result.append(expression)
+
+# So:
+squares = [x ** 2 for x in range(5)]
+# is equivalent to:
+manual_squares = []
+for x in range(5):
+    manual_squares.append(x ** 2)
+
+# ---------- 11. List Comprehension with Enumerate ----------
+
+data = ["a", "b", "c"]
+indexed = [(i, val) for i, val in enumerate(data)]
+print(indexed)  # Output: [(0, 'a'), (1, 'b'), (2, 'c')]
+
+# ---------- 12. Edge Cases ----------
+
+# Empty iterable
+print([x for x in []])  # Output: []
+
+# Infinite generators (use caution!)
+# import itertools
+# [x for x in itertools.count()]  # WARNING: Infinite loop
+
+# ---------- 13. Performance Comparison ----------
+
+# List comprehension is usually faster
+import time
+
+start = time.time()
+squares = [x * x for x in range(10_000)]
+print("List comp:", time.time() - start)
+
+start = time.time()
+squares = []
+for x in range(10_000):
+    squares.append(x * x)
+print("For loop:", time.time() - start)
+
+# ---------- Summary ----------
+
+"""
+✔ Clean, compact way to create lists
+✔ Syntax: [expression for item in iterable if condition]
+✔ Can include else (ternary)
+✔ Can use nested loops
+✔ Can include functions
+✔ Faster than traditional loops in most cases
+✔ Not suitable for very complex logic → prefer loops in that case
+"""
 
 # 🧠 Things to remember:
 # - Use index to access values in a list
