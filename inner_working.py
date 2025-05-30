@@ -111,3 +111,204 @@ if __name__ = "__main__":
     main()
 '''
 # It is used to stop unexpected exicution like when we import any module or any local file it exicutes automatically but if we use it, it will not exicute autmatically.
+
+# ------------------- Dunder (Double Underscore) Methods in Python -------------------
+
+"""
+Dunder methods (short for "double underscore") are also called **magic methods** or **special methods**.
+They are methods with double underscores at the beginning and end of their names, like __init__, __str__, __len__, etc.
+
+Python automatically calls these methods behind the scenes during certain operations.
+You can override them in your class to customize behavior of your objects.
+"""
+
+# ------------------- 1. Object Initialization -------------------
+
+class Person:
+    def __init__(self, name, age):
+        # __init__ is the constructor; called when an object is created
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+        # __str__ is used by str() and print() to return a human-readable string
+        return f"{self.name} is {self.age} years old"
+
+p = Person("Alice", 25)
+print(p)  # Calls __str__
+
+# Behind the scenes: print(p) → str(p) → p.__str__()
+
+# ------------------- 2. Object Representation -------------------
+
+class DebugPerson:
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        # __repr__ is for unambiguous representation, used in debugging
+        return f"DebugPerson(name='{self.name}')"
+
+dp = DebugPerson("Bob")
+print(repr(dp))  # Output: DebugPerson(name='Bob')
+print([dp])      # Uses __repr__ when inside collections
+
+# ------------------- 3. Object Comparison -------------------
+
+class Number:
+    def __init__(self, value):
+        self.value = value
+
+    def __eq__(self, other):
+        return self.value == other.value
+
+    def __lt__(self, other):
+        return self.value < other.value
+
+a = Number(5)
+b = Number(10)
+
+print(a == b)  # False → __eq__
+print(a < b)   # True  → __lt__
+
+# Similar dunder methods:
+# __ne__, __le__, __gt__, __ge__ for other comparisons
+
+# ------------------- 4. Operator Overloading -------------------
+
+class Vector:
+    def __init__(self, x):
+        self.x = x
+
+    def __add__(self, other):
+        return Vector(self.x + other.x)
+
+    def __mul__(self, other):
+        return Vector(self.x * other.x)
+
+    def __str__(self):
+        return f"Vector({self.x})"
+
+v1 = Vector(2)
+v2 = Vector(3)
+print(v1 + v2)  # Vector(5) → __add__
+print(v1 * v2)  # Vector(6) → __mul__
+
+# Other arithmetic methods:
+# __sub__, __truediv__, __floordiv__, __mod__, __pow__
+
+# ------------------- 5. Length, Boolean, and Indexing -------------------
+
+class MyList:
+    def __init__(self, data):
+        self.data = data
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, index):
+        return self.data[index]
+
+    def __contains__(self, item):
+        return item in self.data
+
+    def __bool__(self):
+        return bool(self.data)
+
+lst = MyList([10, 20, 30])
+print(len(lst))      # 3 → __len__
+print(lst[1])        # 20 → __getitem__
+print(10 in lst)     # True → __contains__
+print(bool(lst))     # True → __bool__
+
+# ------------------- 6. Context Managers (with statement) -------------------
+
+class FileManager:
+    def __init__(self, filename):
+        self.filename = filename
+
+    def __enter__(self):
+        print("Opening file...")
+        self.file = open(self.filename, 'w')
+        return self.file
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        print("Closing file...")
+        self.file.close()
+
+# Usage of context manager
+with FileManager("sample.txt") as f:
+    f.write("Hello!")
+
+# __enter__ is called at the start, __exit__ at the end (even if error occurs)
+
+# ------------------- 7. Callable Objects -------------------
+
+class Adder:
+    def __init__(self, base):
+        self.base = base
+
+    def __call__(self, x):
+        return self.base + x
+
+add5 = Adder(5)
+print(add5(10))  # 15 → __call__
+
+# Behind the scenes: add5(10) → add5.__call__(10)
+
+# ------------------- 8. Attribute Access & Management -------------------
+
+class Demo:
+    def __init__(self):
+        self.value = 42
+
+    def __getattr__(self, name):
+        # Called only when attribute is not found normally
+        return f"{name} not found!"
+
+    def __setattr__(self, name, value):
+        # Called for every attribute assignment
+        print(f"Setting {name} to {value}")
+        super().__setattr__(name, value)
+
+    def __delattr__(self, name):
+        print(f"Deleting attribute {name}")
+        super().__delattr__(name)
+
+d = Demo()
+print(d.unknown)       # "unknown not found!" → __getattr__
+d.value = 100          # __setattr__
+del d.value            # __delattr__
+
+# ------------------- 9. Object Lifecycle -------------------
+
+class Life:
+    def __init__(self):
+        print("Object created")
+
+    def __del__(self):
+        print("Object destroyed")
+
+obj = Life()
+del obj  # __del__ is called (but timing is up to garbage collector)
+
+# ------------------- Summary of Popular Dunder Methods -------------------
+
+"""
+✅ __init__      → Constructor
+✅ __str__       → User-readable string
+✅ __repr__      → Debug/official string
+✅ __len__       → Length (used by len())
+✅ __getitem__   → Indexing (obj[index])
+✅ __setitem__   → Index assignment (obj[index] = val)
+✅ __contains__  → Membership (in)
+✅ __eq__, __lt__, __gt__, etc. → Comparisons
+✅ __add__, __sub__, etc. → Arithmetic ops
+✅ __enter__, __exit__    → Context managers (with statement)
+✅ __call__      → Makes object callable like a function
+✅ __getattr__, __setattr__, __delattr__ → Custom attribute behavior
+✅ __bool__      → Boolean conversion
+✅ __del__       → Destructor
+"""
+
+# ------------------- End of Dunder Methods Notes -------------------

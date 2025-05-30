@@ -320,6 +320,178 @@ del obj1.value           # Deleting value
 # - Enables getter, setter, deleter control.
 # - Provides encapsulation and validation.
 
+# ------------------- @property Decorator in Python (Full Notes) -------------------
+
+"""
+The `@property` decorator in Python is used to define **managed attributes**.
+It allows you to define methods in a class that can be accessed like **attributes**, 
+while still providing **encapsulation, validation, and control**.
+
+This is the Pythonic way to implement **getters, setters, and deleters** without breaking the attribute access syntax.
+"""
+
+# ------------------- 1. Without @property -------------------
+
+class Person1:
+    def __init__(self, name):
+        self._name = name
+
+    def get_name(self):
+        return self._name
+
+    def set_name(self, new_name):
+        if isinstance(new_name, str):
+            self._name = new_name
+        else:
+            raise ValueError("Name must be a string")
+
+p1 = Person1("Alice")
+print(p1.get_name())
+p1.set_name("Bob")
+print(p1.get_name())
+
+# ------------------- 2. With @property -------------------
+
+class Person2:
+    def __init__(self, name):
+        self._name = name
+
+    @property
+    def name(self):
+        # Acts like a getter
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        # Acts like a setter
+        if isinstance(value, str):
+            self._name = value
+        else:
+            raise ValueError("Name must be a string")
+
+p2 = Person2("Alice")
+print(p2.name)      # No parentheses → calls getter
+p2.name = "Bob"     # Uses setter
+print(p2.name)
+
+# Behind the scenes:
+# p2.name      → p2.name() → p2.__class__.name.__get__(p2)
+# p2.name = x  → p2.__class__.name.__set__(p2, x)
+
+# ------------------- 3. Making Read-Only Property -------------------
+
+class Circle:
+    def __init__(self, radius):
+        self._radius = radius
+
+    @property
+    def area(self):
+        return 3.14159 * (self._radius ** 2)
+
+c = Circle(5)
+print(c.area)  # 78.53975
+
+# c.area = 100  # ❌ Error: can't set read-only property
+
+# ------------------- 4. Making Write-Only Property -------------------
+
+class Secret:
+    def __init__(self):
+        self._data = None
+
+    @property
+    def data(self):
+        raise AttributeError("Write-only property")
+
+    @data.setter
+    def data(self, value):
+        self._data = value
+
+s = Secret()
+s.data = "classified"
+# print(s.data)  # ❌ Error: Write-only property
+
+# ------------------- 5. With Deleter -------------------
+
+class User:
+    def __init__(self, username):
+        self._username = username
+
+    @property
+    def username(self):
+        return self._username
+
+    @username.deleter
+    def username(self):
+        print("Deleting username...")
+        del self._username
+
+u = User("admin")
+print(u.username)
+del u.username  # Calls deleter
+
+# ------------------- 6. Real-World Example: Temperature Converter -------------------
+
+class Temperature:
+    def __init__(self, celsius):
+        self._celsius = celsius
+
+    @property
+    def celsius(self):
+        return self._celsius
+
+    @celsius.setter
+    def celsius(self, value):
+        if value < -273.15:
+            raise ValueError("Temperature below absolute zero!")
+        self._celsius = value
+
+    @property
+    def fahrenheit(self):
+        return (self._celsius * 9/5) + 32
+
+temp = Temperature(25)
+print(temp.celsius)     # 25
+print(temp.fahrenheit)  # 77.0
+temp.celsius = 100
+print(temp.fahrenheit)  # 212.0
+
+# ------------------- 7. Summary and Best Practices -------------------
+
+"""
+✔ Use `@property` to access methods like attributes
+✔ Keeps your internal implementation hidden
+✔ Helps add validation logic cleanly
+✔ Provides getter, setter, and deleter capabilities
+✔ Makes code more Pythonic and readable
+"""
+
+# ------------------- Common Pattern -------------------
+
+"""
+class MyClass:
+    def __init__(self, value):
+        self._value = value
+
+    @property
+    def value(self):
+        # Getter
+        return self._value
+
+    @value.setter
+    def value(self, val):
+        # Setter
+        self._value = val
+
+    @value.deleter
+    def value(self):
+        # Deleter
+        del self._value
+"""
+
+# ------------------- End of @property Decorator Notes -------------------
+
+
 # --------------------------------------------
 
 # End of Comprehensive Python Functions Notes
